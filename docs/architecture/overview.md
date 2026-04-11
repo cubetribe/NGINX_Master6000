@@ -4,7 +4,7 @@
 
 The project starts as a read-only CLI because the core product value is operational clarity, not configuration editing. The first architecture should make inspection logic easy to test and easy to reuse later.
 
-The current repository contains only the initial scaffold. Target resolution, configuration loading, and live inspection remain planned MVP behavior rather than implemented runtime features.
+The current MVP resolves a local or SSH target, collects listener data through `ss -H -ltnp`, collects the effective Nginx config through `nginx -T -c <path>`, and turns both inputs into a normalized inventory plus human-readable findings.
 
 ## Layers
 
@@ -14,13 +14,13 @@ The current repository contains only the initial scaffold. Target resolution, co
 
 ## Data Flow
 
-The planned MVP data flow is:
+The implemented MVP data flow is:
 
-1. The CLI reads minimal local settings and resolves whether inspection should run against the local host or an SSH target.
-2. The CLI loads the configured `nginx.conf` path, defaulting to the standard server entrypoint unless overridden.
-3. Adapter layers collect raw process, port, and Nginx config inputs.
-4. Core inventory logic normalizes those inputs into a single snapshot.
-5. Conflict logic evaluates the snapshot and returns human-readable findings.
+1. The CLI reads optional local TOML settings and CLI overrides, auto-discovers `config/app.local.toml` or `config/app.toml` when present, then resolves whether inspection runs against the local host or an SSH target.
+2. The SSH path shells out to the system `ssh` client in batch mode so local OpenSSH config and local SSH keys stay the source of truth, with optional explicit `--ssh-key-path` support when a beginner wants a direct key path instead of an SSH alias.
+3. Adapter layers collect raw process, port, and Nginx config inputs from `ss` and `nginx -T`.
+4. Core inventory logic normalizes those inputs into a single snapshot of listeners, config files, parsed site summaries, warnings, and errors.
+5. Conflict logic prioritizes actionable findings such as Nginx warnings, missing active Nginx listeners, and multi-process socket ownership.
 
 ## Design Constraints
 
@@ -28,3 +28,4 @@ The planned MVP data flow is:
 - Clear separation between I/O and pure logic.
 - Testability through fixtures instead of live VPS dependencies.
 - Stable package boundaries that can support a future API or UI.
+- SSH keys remain outside the app and inside the operator's existing SSH tooling.

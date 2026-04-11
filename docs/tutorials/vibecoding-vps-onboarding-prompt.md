@@ -29,6 +29,7 @@ How I want you to work:
    - SSH host
    - SSH port
    - SSH user
+   - local SSH alias, if I use one
    - local SSH key path
 3. Tell me to keep secrets out of chat.
 4. Give commands one small step at a time.
@@ -41,6 +42,7 @@ How I want you to work:
    - confirm key login
    - confirm `nginx -t`
    - confirm basic listening port visibility
+   - run `nginx-vps status --mode ssh --ssh-host <alias-or-host> --ssh-key-path <KEY_PATH>` or `nginx-vps status`
 7. Do not tell me to enable password login as a convenience shortcut.
 8. If I only have password access today, treat it as a temporary bootstrap step whose purpose is to install my public key and then move to key-based access.
 9. When suggesting config files, use sample placeholders and remind me not to commit real values.

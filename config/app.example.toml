@@ -2,10 +2,15 @@
 # Do not commit real hosts, credentials, internal paths, or private infrastructure details.
 # Authentication material is intentionally excluded from this repository.
 # Planned SSH usage should prefer a local SSH key on the operator machine, not passwords.
+# If your local SSH config already defines HostName/User/Port/IdentityFile, you can
+# point ssh_host at that alias and omit the other SSH fields in your real local file.
 
 [target]
-mode = "local" # local | ssh
-ssh_host = "example-vps"
-ssh_port = 22
-ssh_user = "deploy"
+mode = "ssh" # local | ssh
 nginx_conf_path = "/etc/nginx/nginx.conf"
+
+[target.ssh]
+host = "your-ssh-alias"
+port = 22
+user = "deploy"
+# key_path = "~/.ssh/id_nginx_master6000"

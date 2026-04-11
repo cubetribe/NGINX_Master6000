@@ -37,7 +37,7 @@ The first milestone is intentionally smaller and safer:
 - Nginx configuration inventory rooted in `nginx.conf`.
 - Human-readable conflict detection.
 
-This repository currently contains the initial scaffold for that MVP. It does not yet implement live inspection logic.
+That MVP is now implemented as `nginx-vps status`.
 
 ## Safety-First Principles
 
@@ -47,6 +47,7 @@ Security is part of the product and part of the repository.
 - Sample configuration stays minimal and intentionally excludes authentication material.
 - The recommended early setup is local installation plus SSH key-based access to the VPS.
 - Password-based VPS access should not be the default path for this project.
+- The SSH workflow should prefer your local OpenSSH config and a dedicated local key instead of key material inside app config.
 - The first runtime milestone is read-only by default.
 - Packaging and CLI entry points are tested so the public contract stays trustworthy.
 - GitHub automation is set up to run tests, package smoke checks, and dependency audits.
@@ -63,6 +64,14 @@ The recommended operator workflow for early versions is:
 1. Install NGINX Master6000 on your local machine.
 2. Connect to the VPS with a dedicated local SSH key.
 3. Keep passwords, private keys, and real host inventories out of Git, prompts, and issue threads.
+
+Example SSH-first usage:
+
+```bash
+nginx-vps status --mode ssh --ssh-host your-ssh-alias --ssh-key-path ~/.ssh/id_nginx_master6000
+```
+
+If your local machine is not Linux, use SSH mode. `local` mode is intended for Linux hosts, including a direct install on the VPS itself.
 
 ## Why Open Source
 
@@ -105,6 +114,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 python3 -m pip install -e ".[dev]"
 nginx-vps --help
+nginx-vps status --mode ssh --ssh-host your-ssh-alias --ssh-key-path ~/.ssh/id_nginx_master6000
 python3 -m pytest
 ```
 
@@ -120,8 +130,8 @@ Before opening a pull request or issue:
 
 ## Roadmap
 
-1. Build a reliable local and SSH target model for inspection.
-2. Parse active Nginx configuration into a normalized inventory.
-3. Detect port collisions, overlapping listeners, and config surprises with actionable output.
-4. Add machine-readable output without sacrificing human-readable diagnostics.
+1. Tighten and prioritize findings for large real-world Nginx estates.
+2. Add machine-readable output without sacrificing human-readable diagnostics.
+3. Expand conflict detection around include surprises, default servers, and socket ownership edge cases.
+4. Keep the SSH-first onboarding path beginner-safe and security-focused.
 5. Reuse the same core model for a future API or UI layer once the diagnostic foundation is stable.

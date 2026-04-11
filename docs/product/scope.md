@@ -13,8 +13,9 @@ The first release should give a reliable, read-only overview of Nginx and VPS ru
 - Inspect a local machine or SSH target without changing server state.
 - Inventory listening ports and the processes behind them.
 - Trace active Nginx configuration from the configured `nginx.conf` entrypoint.
-- Detect obvious conflicts such as overlapping listen directives or competing port usage.
+- Detect obvious conflicts such as Nginx config warnings, competing port usage, and duplicate default servers.
 - Present findings in plain language suitable for operators and developers.
+- Keep password-based SSH out of the public CLI path and prefer local key-based access for remote targets.
 
 ## Non-Goals
 

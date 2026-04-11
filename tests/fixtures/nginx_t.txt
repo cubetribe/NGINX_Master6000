@@ -1,0 +1,26 @@
+2026/04/11 12:17:12 [warn] 2875986#2875986: protocol options redefined for 0.0.0.0:443 in /etc/nginx/sites-enabled/example.conf:10
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+# configuration file /etc/nginx/nginx.conf:
+http {
+    include /etc/nginx/sites-enabled/*;
+}
+
+# configuration file /etc/nginx/sites-enabled/example.conf:
+server {
+    listen 80;
+    listen [::]:80;
+    server_name example.com www.example.com;
+}
+
+server {
+    listen 443 ssl http2 default_server;
+    listen [::]:443 ssl http2 default_server;
+    server_name example.com www.example.com;
+}
+
+# configuration file /etc/nginx/sites-enabled/api.conf:
+server {
+    listen 443 ssl http2;
+    server_name api.example.com;
+}

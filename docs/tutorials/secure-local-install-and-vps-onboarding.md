@@ -101,6 +101,7 @@ Why local install first:
 - your SSH key stays on your machine
 - the tool can inspect remote state without exposing another public web surface
 - setup is simpler for the current read-only milestone
+- the app reuses your local OpenSSH setup instead of managing key material itself
 
 ## Step 5: Prepare Local Target Settings Safely
 
@@ -111,15 +112,27 @@ Instead create a local-only config file such as:
 ```toml
 [target]
 mode = "ssh"
-ssh_host = "your-vps.example"
-ssh_port = 22
-ssh_user = "deploy"
+nginx_conf_path = "/etc/nginx/nginx.conf"
+
+[target.ssh]
+host = "your-vps.example"
+port = 22
+user = "deploy"
+key_path = "~/.ssh/id_nginx_master6000"
+```
+
+If you already have a local SSH alias with `HostName`, `User`, `Port`, and `IdentityFile`, you can keep the real file even smaller:
+
+```toml
+[target]
+mode = "ssh"
+ssh_host = "your-ssh-alias"
 nginx_conf_path = "/etc/nginx/nginx.conf"
 ```
 
 Keep real local config files untracked, for example:
 
-- `config/operator.local.toml`
+- `config/app.local.toml`
 - `.env.local`
 
 Do not store:
@@ -138,6 +151,36 @@ ssh -i ~/.ssh/id_nginx_master6000 -p <SSH_PORT> <SSH_USER>@<SSH_HOST> "ss -ltnp 
 ```
 
 The point of the first milestone is visibility, not mutation.
+
+## Step 7: Run the MVP Safely
+
+Use either your auto-discovered local config file:
+
+```bash
+nginx-vps status
+```
+
+Or call the target explicitly with your SSH alias or host and key path:
+
+```bash
+nginx-vps status \
+  --mode ssh \
+  --ssh-host your-ssh-alias \
+  --ssh-key-path ~/.ssh/id_nginx_master6000
+```
+
+What the current MVP does:
+
+- lists active listening TCP ports and the processes behind them
+- runs `nginx -T` read-only and summarizes active config files and parsed site blocks
+- surfaces Nginx warnings and obvious findings without editing the server
+
+What it does not do:
+
+- edit config files
+- reload Nginx
+- copy SSH keys
+- store credentials in the repository
 
 ## For Less Experienced VPS Users
 
