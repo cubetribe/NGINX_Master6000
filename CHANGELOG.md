@@ -19,6 +19,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 
 - Initial README with product vision, MVP scope, non-goals, setup, and roadmap.
 - Open-source README rewrite with clearer project positioning, operator pain points, and community onboarding guidance.
+- Added a secure VPS onboarding tutorial and a ready-to-paste Vibe Coding assistant prompt with SSH key-only guidance.
 
 ### Infra
 

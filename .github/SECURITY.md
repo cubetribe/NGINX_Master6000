@@ -20,6 +20,13 @@ This project is in early development. Security fixes are expected to land on the
 - Redact hostnames, IP addresses, usernames, and internal paths when sharing diagnostics.
 - Use minimal reproducible examples rather than live production data.
 
+## Operator Safety Guidance
+
+- Prefer running the tool from your local machine and reaching the VPS over SSH.
+- Use a dedicated local SSH key for the VPS instead of password authentication.
+- Do not paste private keys, password prompts, or unredacted server outputs into AI assistants or public GitHub threads.
+- If your VPS still allows password login, treat that as a temporary migration state and move to key-only access before normal operation.
+
 ## Maintainer Checklist
 
 Before public launch, maintainers should enable:

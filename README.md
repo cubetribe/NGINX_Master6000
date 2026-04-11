@@ -45,9 +45,24 @@ Security is part of the product and part of the repository.
 
 - No secrets, private keys, certificates, or host-specific credentials belong in this repository.
 - Sample configuration stays minimal and intentionally excludes authentication material.
+- The recommended early setup is local installation plus SSH key-based access to the VPS.
+- Password-based VPS access should not be the default path for this project.
 - The first runtime milestone is read-only by default.
 - Packaging and CLI entry points are tested so the public contract stays trustworthy.
 - GitHub automation is set up to run tests, package smoke checks, and dependency audits.
+
+## Getting Started Safely
+
+If you are new to VPS operations, start here:
+
+- [Secure installation guide](docs/tutorials/secure-local-install-and-vps-onboarding.md)
+- [Vibe coding assistant prompt](docs/tutorials/vibecoding-vps-onboarding-prompt.md)
+
+The recommended operator workflow for early versions is:
+
+1. Install NGINX Master6000 on your local machine.
+2. Connect to the VPS with a dedicated local SSH key.
+3. Keep passwords, private keys, and real host inventories out of Git, prompts, and issue threads.
 
 ## Why Open Source
 
@@ -100,6 +115,7 @@ Before opening a pull request or issue:
 - read [CONTRIBUTING.md](CONTRIBUTING.md)
 - read [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 - read [.github/SECURITY.md](.github/SECURITY.md)
+- read [docs/tutorials/secure-local-install-and-vps-onboarding.md](docs/tutorials/secure-local-install-and-vps-onboarding.md) if you plan to use this against a real VPS
 - never paste credentials, internal IPs, private certificates, or private keys into public threads
 
 ## Roadmap

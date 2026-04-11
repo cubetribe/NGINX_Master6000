@@ -30,6 +30,7 @@ python3 -m pytest
 - Never commit secrets, private keys, certificates, passwords, tokens, `.env` files, or real server inventories.
 - Never post credentials, internal IP addresses, or customer infrastructure details in issues or pull requests.
 - Use sample data, fixtures, and redacted logs only.
+- Prefer documenting SSH key-based workflows instead of password-based workflows.
 - If you find a vulnerability, follow [.github/SECURITY.md](.github/SECURITY.md) instead of opening a public issue.
 
 ## Contribution Priorities

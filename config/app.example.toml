@@ -1,6 +1,7 @@
 # Example target settings for read-only inspection.
 # Do not commit real hosts, credentials, internal paths, or private infrastructure details.
 # Authentication material is intentionally excluded from this repository.
+# Planned SSH usage should prefer a local SSH key on the operator machine, not passwords.
 
 [target]
 mode = "local" # local | ssh
