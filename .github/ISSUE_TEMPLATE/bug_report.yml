@@ -1,0 +1,37 @@
+name: Bug report
+description: Report a reproducible problem in diagnostics, packaging, or repository workflows.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please redact secrets, certificates, private keys, internal IPs, and customer infrastructure details before posting.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the behavior and why it is a problem.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Share the smallest reproducible case you can.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, Nginx version, and relevant context.
+    validations:
+      required: true

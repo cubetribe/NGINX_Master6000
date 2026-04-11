@@ -1,0 +1,25 @@
+name: Feature request
+description: Suggest an improvement that makes Nginx diagnostics clearer, safer, or easier to operate.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What operator problem should this solve?
+      description: Describe the real-world pain point first.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed idea
+      description: Explain the feature in plain language.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Share examples, redacted configs, or workflows if helpful.

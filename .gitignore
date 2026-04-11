@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.so
+
+# Virtual environments
+.venv/
+venv/
+
+# Packaging
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+
+# Tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+.hypothesis/
+htmlcov/
+
+# Local environment files
+.env
+.env.*
+.envrc
+.direnv/
+.python-version
+
+# Editors
+.idea/
+.vscode/
+
+# Local app config and logs
+config/*.local.toml
+*.log
+
+# Secrets and credentials
+*.crt
+*.csr
+*.key
+*.kdbx
+*.ovpn
+*.p12
+*.pem
+*.pfx
+id_*
+known_hosts
+.secrets/
+secrets/
+
+# macOS
+.DS_Store
