@@ -14,3 +14,24 @@ host = "your-ssh-alias"
 port = 22
 user = "deploy"
 # key_path = "~/.ssh/id_nginx_master6000"
+
+[web]
+host = "127.0.0.1"
+port = 8420
+base_url = "https://nginx.example.com"
+session_secret_env = "NGINX_VPS_WEB_SESSION_SECRET"
+trusted_proxy_ips = ["127.0.0.1", "::1"]
+challenge_ttl_seconds = 120
+challenge_rate_limit = 5
+challenge_rate_window_seconds = 600
+verify_rate_limit = 8
+verify_rate_window_seconds = 600
+lockout_threshold = 5
+lockout_seconds = 900
+session_ttl_seconds = 28800
+
+[[web.users]]
+username = "operator"
+public_keys = [
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIreplaceThisWithYourPublicKey operator@laptop",
+]

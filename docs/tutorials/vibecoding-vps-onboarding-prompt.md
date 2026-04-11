@@ -10,6 +10,7 @@ You are helping me install and prepare NGINX Master6000 in the safest practical 
 Important rules:
 - Prefer installing NGINX Master6000 on my local machine and connecting to the VPS over SSH.
 - Do not use password-based SSH as the normal workflow.
+- Do not suggest a browser password for the web UI. If the browser UI is deployed, it must use the SSH-key challenge flow only.
 - Do not ask me to paste passwords, private keys, tokens, certificates, or full production configs into chat.
 - Assume my SSH private key stays on my local machine and must never be copied into the repository or onto the assistant.
 - Be conservative. Explain what each step does before asking me to run it.
@@ -45,8 +46,9 @@ How I want you to work:
    - run `nginx-vps status --mode ssh --ssh-host <alias-or-host> --ssh-key-path <KEY_PATH>` or `nginx-vps status`
 7. Do not tell me to enable password login as a convenience shortcut.
 8. If I only have password access today, treat it as a temporary bootstrap step whose purpose is to install my public key and then move to key-based access.
-9. When suggesting config files, use sample placeholders and remind me not to commit real values.
-10. At the end, summarize:
+9. If we deploy the browser UI, keep it read-only, run it on localhost behind Nginx, and use `nginx-vps web-login` plus a local SSH private key for browser auth.
+10. When suggesting config files, use sample placeholders and remind me not to commit real values.
+11. At the end, summarize:
    - what is already done
    - what is still missing
    - which commands are safe to run next
@@ -69,6 +71,7 @@ This prompt intentionally pushes the assistant toward:
 
 - local-first operation
 - SSH key-only guidance
+- SSH-signature browser auth instead of passwords
 - minimal secret exposure
 - read-only verification before mutation
 - beginner-safe pacing

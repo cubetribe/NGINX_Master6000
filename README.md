@@ -36,8 +36,13 @@ The first milestone is intentionally smaller and safer:
 - Port and process visibility.
 - Nginx configuration inventory rooted in `nginx.conf`.
 - Human-readable conflict detection.
+- A secure browser UI unlocked only by a local SSH-key signature challenge.
 
-That MVP is now implemented as `nginx-vps status`.
+That MVP is now implemented as:
+
+- `nginx-vps status` for terminal-first inspection
+- `nginx-vps web serve` for a read-only browser UI
+- `nginx-vps web-login` for the local SSH-key approval step
 
 ## Safety-First Principles
 
@@ -48,6 +53,7 @@ Security is part of the product and part of the repository.
 - The recommended early setup is local installation plus SSH key-based access to the VPS.
 - Password-based VPS access should not be the default path for this project.
 - The SSH workflow should prefer your local OpenSSH config and a dedicated local key instead of key material inside app config.
+- The browser UI does not accept a password. Login is approved only through a local CLI step that signs a short-lived challenge with your SSH private key.
 - The first runtime milestone is read-only by default.
 - Packaging and CLI entry points are tested so the public contract stays trustworthy.
 - GitHub automation is set up to run tests, package smoke checks, and dependency audits.
@@ -57,6 +63,7 @@ Security is part of the product and part of the repository.
 If you are new to VPS operations, start here:
 
 - [Secure installation guide](docs/tutorials/secure-local-install-and-vps-onboarding.md)
+- [Secure web UI deployment](docs/tutorials/secure-web-ui-deployment.md)
 - [Vibe coding assistant prompt](docs/tutorials/vibecoding-vps-onboarding-prompt.md)
 
 The recommended operator workflow for early versions is:
@@ -69,6 +76,27 @@ Example SSH-first usage:
 
 ```bash
 nginx-vps status --mode ssh --ssh-host your-ssh-alias --ssh-key-path ~/.ssh/id_nginx_master6000
+```
+
+Example web UI usage behind HTTPS:
+
+```bash
+export NGINX_VPS_WEB_SESSION_SECRET="$(python3 - <<'PY'
+import secrets
+print(secrets.token_urlsafe(48))
+PY
+)"
+nginx-vps web serve --config config/app.local.toml
+```
+
+Then open the configured HTTPS URL and approve the browser challenge locally:
+
+```bash
+nginx-vps web-login \
+  --base-url https://nginx.example.com \
+  --username operator \
+  --challenge-id <BROWSER_CHALLENGE_ID> \
+  --key-path ~/.ssh/id_nginx_master6000
 ```
 
 If your local machine is not Linux, use SSH mode. `local` mode is intended for Linux hosts, including a direct install on the VPS itself.
@@ -134,4 +162,4 @@ Before opening a pull request or issue:
 2. Add machine-readable output without sacrificing human-readable diagnostics.
 3. Expand conflict detection around include surprises, default servers, and socket ownership edge cases.
 4. Keep the SSH-first onboarding path beginner-safe and security-focused.
-5. Reuse the same core model for a future API or UI layer once the diagnostic foundation is stable.
+5. Keep the web layer read-only, SSH-key-only, and explainable before any future write-path is considered.

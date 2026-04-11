@@ -19,6 +19,8 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Fixture-driven parser tests plus live validation against a real SSH target and a Linux `local` run.
 - A persisted MVP implementation brief under `reports/generated/`.
 - Explicit `--ssh-key-path` support and local config auto-discovery for beginner-friendly, key-only SSH workflows.
+- A minimal read-only web UI with SSH public-key challenge login, in-memory rate limiting, lockout, challenge expiry, and secure session cookies.
+- A local CLI approval flow via `nginx-vps web-login`, plus a `nginx-vps web serve` entrypoint for secure local or VPS-hosted UI runs.
 
 ### Docs
 
@@ -26,6 +28,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Open-source README rewrite with clearer project positioning, operator pain points, and community onboarding guidance.
 - Added a secure VPS onboarding tutorial and a ready-to-paste Vibe Coding assistant prompt with SSH key-only guidance.
 - Updated public docs to reflect the working MVP, SSH-alias guidance, and the real `nginx-vps status` flow.
+- Added secure web UI deployment guidance for HTTPS reverse proxy, session secret handling, and SSH-key browser login.
 
 ### Infra
 
@@ -35,3 +38,4 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 
 - Replaced the temporary proprietary placeholder with an Apache-2.0 open-source license.
 - Replaced the placeholder CLI with real local/SSH inspection and output formatting.
+- Expanded the product surface from CLI-only diagnostics to a read-only web dashboard built on the same inventory pipeline.

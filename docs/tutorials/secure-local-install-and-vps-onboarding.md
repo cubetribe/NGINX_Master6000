@@ -7,7 +7,7 @@ This guide is for the safest early workflow:
 3. use a dedicated local SSH key
 4. avoid password-based login for normal operation
 
-For the current CLI-first milestone, this is safer than turning the VPS itself into another management surface.
+For the current milestone, this is still safer than exposing a writable management surface on the VPS. If you later add the web UI, keep it read-only, keep it behind HTTPS, and keep browser login password-free.
 
 ## Security Baseline
 
@@ -151,6 +151,19 @@ ssh -i ~/.ssh/id_nginx_master6000 -p <SSH_PORT> <SSH_USER>@<SSH_HOST> "ss -ltnp 
 ```
 
 The point of the first milestone is visibility, not mutation.
+
+## Optional: Run the Read-Only Web UI on the VPS
+
+If you want a browser surface later, keep the model conservative:
+
+- run the Python web process on `127.0.0.1`
+- put Nginx in front of it on `443`
+- require a local SSH-key challenge for login
+- do not add a browser password fallback
+
+The dedicated deployment guide is here:
+
+- [Secure web UI deployment](secure-web-ui-deployment.md)
 
 ## Step 7: Run the MVP Safely
 

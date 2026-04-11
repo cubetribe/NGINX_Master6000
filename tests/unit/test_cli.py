@@ -64,10 +64,49 @@ def test_console_script_entry_point_contract() -> None:
     assert top_level_help.returncode == 0
     assert "Usage: nginx-vps [OPTIONS] COMMAND [ARGS]..." in top_level_help.stdout
     assert "status" in top_level_help.stdout
+    assert "web" in top_level_help.stdout
+    assert "web-login" in top_level_help.stdout
     assert status_help.returncode == 0
     assert "Show a read-only status summary" in status_help.stdout
     assert "[target]" in status_help.stdout
     assert "--ssh-key-path" in status_help.stdout
+
+
+def test_web_login_command_renders_success(monkeypatch) -> None:
+    def fake_complete_web_login(**_: object) -> dict[str, object]:
+        return {
+            "challenge_id": "challenge-123",
+            "username": "operator",
+        }
+
+    monkeypatch.setattr("nginx_vps.cli.complete_web_login", fake_complete_web_login)
+
+    result = runner.invoke(
+        app,
+        [
+            "web-login",
+            "--base-url",
+            "https://nginx.example.com",
+            "--username",
+            "operator",
+            "--challenge-id",
+            "challenge-123",
+            "--key-path",
+            "/tmp/id_operator",
+        ],
+    )
+
+    assert result.exit_code == 0
+    assert "Approved browser login challenge challenge-123 for operator." in result.stdout
+
+
+def test_web_serve_help_mentions_ssh_challenge_login() -> None:
+    result = runner.invoke(app, ["web", "serve", "--help"])
+
+    assert result.exit_code == 0
+    assert "Run the secure read-only browser UI" in result.stdout
+    assert "--session-secret-env" in result.stdout
+    assert "--ssh-key-path" in result.stdout
 
 
 def test_status_error_only_report_does_not_claim_no_findings(monkeypatch) -> None:

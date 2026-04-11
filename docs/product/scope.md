@@ -16,6 +16,7 @@ The first release should give a reliable, read-only overview of Nginx and VPS ru
 - Detect obvious conflicts such as Nginx config warnings, competing port usage, and duplicate default servers.
 - Present findings in plain language suitable for operators and developers.
 - Keep password-based SSH out of the public CLI path and prefer local key-based access for remote targets.
+- Offer a minimal browser dashboard that remains read-only and requires a local SSH-key challenge instead of a password form.
 
 ## Non-Goals
 
@@ -23,9 +24,11 @@ The first release should give a reliable, read-only overview of Nginx and VPS ru
 - Restarting services or applying fixes.
 - Full hosting control-panel behavior.
 - Domain, DNS, certificate, or deployment management.
+- Browser-password authentication.
 
 ## Success Signals
 
 - A user can identify a port collision quickly.
 - A user can see which Nginx files are active from one command.
 - Output is understandable without requiring deep Nginx internals knowledge.
+- A browser session can be unlocked without sending a password to the server.
